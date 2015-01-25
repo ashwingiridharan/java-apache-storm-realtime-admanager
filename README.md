@@ -39,20 +39,20 @@ Now say after 20 hours, only 4,00,000 views and 30 hits were there for reebok ad
 To help this real time dynamic decision making, we will use our STORM system.
 
 API Details (Component wise)
-============================
+----------------------------
 
 Database : MySql or Cassandra
 -----------------------------
-AdInfo ( AdId, AdDetails, Context, ExpectedViews, TotalViews, ExpectedHits, TotalHits, TimeEnd)
-SiteInfo ( SiteId, SitelName, Context)
-TrendsInfo ( TimeFrame, SiteId, Context, Loc, Views, Hits)
+1. AdInfo ( AdId, AdDetails, Context, ExpectedViews, TotalViews, ExpectedHits, TotalHits, TimeEnd)
+2. SiteInfo ( SiteId, SitelName, Context)
+3. TrendsInfo ( TimeFrame, SiteId, Context, Loc, Views, Hits)
 
 Simulator (Java)
 ----------------
-AdRegistration
-SiteInfoRegistration
-AdPlacementManager
-GraphInfoFetcher
+1. AdRegistration
+2. SiteInfoRegistration
+3. AdPlacementManager
+4. GraphInfoFetcher
 
 Spouts (Emits tuples to Bolts)
 ------------------------------
