@@ -4,6 +4,7 @@ java-apache-storm-realtime-admanager
 A simple ad placement manager using Apache Storm. More features to be added.
 
 Overview
+--------
 
 Every advertisement will have a set of contexts. For example, the ad for "reebok shoe" will have the context as "sports/gears".
 Similarly every website will have a context for itself. For example, the site espncricinfo.com has the context  "sports/cricket" and sayflipkart.com will have the context as "gadgets", "laptops", "furnitures" etc.
@@ -31,45 +32,36 @@ The following information will be gathered,
 3. Which location users are more interested in a particular context?
  
 Use Case:
+---------
 Now say reebook registered for tier B in google, which requires 5,00,000 views and 50 hits.
 Now say after 20 hours, only 4,00,000 views and 30 hits were there for reebok ad. So, google has to ensure that 20 hits has to be done in next 4 hours. To do that, google have to place the rebook AD in sites, which are more popular at the moment and having relevant contexts.
  
 To help this real time dynamic decision making, we will use our STORM system.
 
-
-
-
-
-
-
-
-
-
-
-
 API Details (Component wise)
+============================
 
 Database : MySql or Cassandra
-
+-----------------------------
 AdInfo ( AdId, AdDetails, Context, ExpectedViews, TotalViews, ExpectedHits, TotalHits, TimeEnd)
 SiteInfo ( SiteId, SitelName, Context)
 TrendsInfo ( TimeFrame, SiteId, Context, Loc, Views, Hits)
 
 Simulator (Java)
-
+----------------
 AdRegistration
 SiteInfoRegistration
 AdPlacementManager
 GraphInfoFetcher
 
 Spouts (Emits tuples to Bolts)
-
-SiteViewsSpout - Generates( {views, SiteId, Loc, AdIds = [AdId1, AdId2, AdId3, .. , AdIdn]} ) - Ads viewed by the user in his session
-SiteHitsSpout - Generates( {hits, SiteId, Loc, AdId} ) - Ad clicked by the user
+------------------------------
+1. SiteViewsSpout - Generates( {views, SiteId, Loc, AdIds = [AdId1, AdId2, AdId3, .. , AdIdn]} ) - Ads viewed by the user in his session
+2. SiteHitsSpout - Generates( {hits, SiteId, Loc, AdId} ) - Ad clicked by the user
 
 Bolts (Stores timeline statistics in database)
-
-TrendInfoBolt listens SiteViewsSpout ,SiteHitsSpout - Outputs/Updates DB( TimeFrame, SiteId, Context, Loc, Views, Hits)
-AdDistributorBolt listens SiteViewsSpout - Outputs/Updates DB (views, AdId, 1)
-AdTrendsBolt listens AdDistributorBolt, SiteHitsSpout - Outputs/UpdatesDB (hits, AdId, 1)
+----------------------------------------------
+1. TrendInfoBolt listens SiteViewsSpout ,SiteHitsSpout - Outputs/Updates DB( TimeFrame, SiteId, Context, Loc, Views, Hits)
+2. AdDistributorBolt listens SiteViewsSpout - Outputs/Updates DB (views, AdId, 1)
+3. AdTrendsBolt listens AdDistributorBolt, SiteHitsSpout - Outputs/UpdatesDB (hits, AdId, 1)
 
